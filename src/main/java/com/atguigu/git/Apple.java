@@ -9,5 +9,7 @@ package com.atguigu.git;
  * @date 2019-03-17 
  */
 public class Apple {
-
+	public static void main(String[] args) {
+		
+	}
 }
