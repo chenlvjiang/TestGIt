@@ -15,5 +15,6 @@ public class Apple {
 		System.out.println("rigth");
 		System.out.println("left");
 		System.out.println("hot_fix");
+		System.out.println("hot_fi2");
 	}
 }
