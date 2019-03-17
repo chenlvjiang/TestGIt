@@ -14,6 +14,6 @@ public class Apple {
 		System.out.println("left");
 		System.out.println("rigth");
 		System.out.println("left");
-
+		
 	}
 }
