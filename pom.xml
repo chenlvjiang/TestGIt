@@ -9,7 +9,19 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <properties>
   	<webVersion>3.0</webVersion>
   </properties>
-  <build/>
+	<build>
+		<plugins>
+			<!-- 添加项目JDK编译插件 -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
   
   
 </project>
