@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- 注意filter的位置,解决乱码的filter放在后面 -->
+
+
+	<!--  支持form:form标签的method=put和delete  -->
+	<filter>
+
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+
+	</filter>
+	<filter-mapping>
+
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+
+		<!-- 此处写DispatcherServlet的名字 -->
+
+
+		<servlet-name>SpringMVC</servlet-name>
+
+	</filter-mapping>
+
+
+	<!-- 使用filter来解决中文的乱码问题 -->
+	<filter>
+		<filter-name>characterEncodingFiter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>characterEncodingFiter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 使用servlet来处理静态的资源 -->
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.png</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.gif</url-pattern>
+	</servlet-mapping>
+
+
+	<!--配置Log4J-->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:org/tarena/netctoss/config/log4j.properties</param-value>
+	</context-param>
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>1000</param-value>
+	</context-param>
+	<listener><!-- 使用监听器的方式来初始化Log4J,监听的是ServletContext对象,只会创建一个 -->
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>demo.root</param-value>
+    </context-param>
+
+	<!-- 配置SpringMVC的主控制器 -->
+	<servlet>
+		<servlet-name>SpringMVC</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<!-- 指定主控制器的配置文件 -->
+			<param-value>classpath:org/tarena/netctoss/config/spring_configure.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SpringMVC</servlet-name>
+		<!-- 指定只接受.from结尾的请求  接受所有的请求 -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<!-- 只要出现404出错就跳转到toLogin页面 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/toLogin</location>
+	</error-page>
+	<jsp-config> 
+	 <taglib>
+	  <taglib-uri>/WEB-INF/spring.tld</taglib-uri>
+	  <taglib-location>/WEB-INF/spring.tld</taglib-location>
+	 </taglib> 
+	</jsp-config>
+</web-app>
